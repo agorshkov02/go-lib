@@ -2,6 +2,7 @@ package json
 
 import (
 	"encoding/json"
+	"errors"
 	"io"
 )
 
@@ -12,7 +13,7 @@ const (
 func ReadJSON(r io.Reader, v any) error {
 	buff := make([]byte, uint64(maxBytes))
 	n, err := r.Read(buff)
-	if err != nil {
+	if err != nil && !errors.Is(err, io.EOF) {
 		return err
 	}
 	if err := json.Unmarshal(buff[:n], v); err != nil {
