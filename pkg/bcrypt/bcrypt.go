@@ -2,6 +2,7 @@ package bcrypt
 
 import (
 	"crypto/sha256"
+	"encoding/hex"
 	"errors"
 
 	"golang.org/x/crypto/bcrypt"
@@ -9,7 +10,7 @@ import (
 
 func Sum256(data string) string {
 	hash := sha256.Sum256([]byte(data))
-	return string(hash[:])
+	return hex.EncodeToString(hash[:])
 }
 
 func CompareHashAndPassword(hash, password string) (bool, error) {
